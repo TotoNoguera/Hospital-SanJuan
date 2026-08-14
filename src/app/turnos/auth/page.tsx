@@ -22,8 +22,7 @@ export default function TurnosAuthPage() {
         {/* Auth Panel */}
         <InlineAuthPanel
           onAuthenticated={() => {
-            // Después de autenticarse, redirigir al wizard y refrescar para que el servidor valide la sesión
-            router.refresh();
+            // Después de autenticarse, redirigir al wizard
             router.push("/turnos");
           }}
           title="Continuá tu reserva"

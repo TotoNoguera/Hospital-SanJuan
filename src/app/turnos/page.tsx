@@ -18,11 +18,17 @@ export default async function TurnosPage({
 
   const { especialidad } = await searchParams;
 
-  const specialties = await prisma.specialty.findMany({
-    where: { bookingMode: "ONLINE" },
-    orderBy: { order: "asc" },
-    include: { doctors: { where: { active: true }, orderBy: { name: "asc" } } },
-  });
+  let specialties: any[] = [];
+  try {
+    specialties = (await prisma.specialty.findMany({
+      where: { bookingMode: "ONLINE" },
+      orderBy: { order: "asc" },
+      include: { doctors: { where: { active: true }, orderBy: { name: "asc" } } },
+    })) as any[];
+  } catch (error) {
+    console.error("[/turnos] Prisma query failed:", error);
+    specialties = [];
+  }
 
   // Obtener datos del paciente autenticado
   const patient = await prisma.patient.findUnique({
@@ -43,13 +49,13 @@ export default async function TurnosPage({
 
       <div className="mt-6 sm:mt-10">
         <BookingWizard
-          specialties={specialties.map((s) => ({
+          specialties={JSON.parse(JSON.stringify(specialties.map((s: any) => ({
             id: s.id,
             name: s.name,
             slug: s.slug,
             icon: s.icon,
-            doctors: s.doctors.map((d) => ({ id: d.id, name: d.name, bio: d.bio })),
-          }))}
+            doctors: s.doctors.map((d: any) => ({ id: d.id, name: d.name, bio: d.bio })),
+          }))))}
           initialSpecialtySlug={especialidad}
           initialPatient={patient}
         />
