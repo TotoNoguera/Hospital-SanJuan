@@ -114,25 +114,25 @@ export default function BookingWizard({
   if (result) {
     const appointmentDate = new Date(result.date);
     return (
-      <div className="rounded-2xl border border-border bg-surface p-8 text-center">
-        <span className="mx-auto flex h-14 w-14 items-center justify-center rounded-full bg-success/10 text-success">
-          <Check className="h-7 w-7" />
+      <div className="rounded-xl sm:rounded-2xl border border-border bg-surface p-4 sm:p-8 text-center">
+        <span className="mx-auto flex h-12 w-12 sm:h-14 sm:w-14 items-center justify-center rounded-full bg-success/10 text-success">
+          <Check className="h-6 w-6 sm:h-7 sm:w-7" />
         </span>
-        <h2 className="mt-4 text-2xl font-bold text-foreground">¡Turno confirmado!</h2>
-        <p className="mt-1 text-muted">Te esperamos en Hospital San Juan.</p>
+        <h2 className="mt-3 sm:mt-4 text-xl sm:text-2xl font-bold text-foreground">¡Turno confirmado!</h2>
+        <p className="mt-1 text-xs sm:text-sm text-muted">Te esperamos en Hospital San Juan.</p>
 
-        <div className="mx-auto mt-6 max-w-sm rounded-2xl bg-primary-light p-5 text-left">
+        <div className="mx-auto mt-4 sm:mt-6 max-w-sm rounded-lg sm:rounded-2xl bg-primary-light p-3 sm:p-5 text-left">
           <p className="text-xs font-semibold uppercase tracking-wide text-primary">
             {result.specialty.name}
           </p>
-          <p className="mt-1 font-semibold text-foreground">{result.doctor.name}</p>
-          <p className="mt-2 text-lg font-bold text-primary">
+          <p className="mt-1 font-semibold text-sm sm:text-base text-foreground truncate">{result.doctor.name}</p>
+          <p className="mt-2 text-base sm:text-lg font-bold text-primary">
             {formatAppointmentDate(appointmentDate)} · {formatAppointmentTime(appointmentDate)} hs
           </p>
-          <p className="mt-2 text-sm text-muted">Turno #{result.id.slice(-6).toUpperCase()}</p>
+          <p className="mt-2 text-xs sm:text-sm text-muted">Turno #{result.id.slice(-6).toUpperCase()}</p>
         </div>
 
-        <div className="mt-6 flex flex-col items-center gap-3 sm:flex-row sm:justify-center">
+        <div className="mt-4 sm:mt-6 flex flex-col items-center gap-2 sm:gap-3">
           <a
             href={buildWhatsAppAppointmentLink({
               appointmentId: result.id,
@@ -143,19 +143,19 @@ export default function BookingWizard({
             })}
             target="_blank"
             rel="noreferrer"
-            className="flex items-center gap-2 rounded-full bg-success px-6 py-3 text-sm font-semibold text-white transition hover:opacity-90"
+            className="flex w-full items-center justify-center gap-2 rounded-full bg-success px-4 sm:px-6 py-2.5 sm:py-3 text-xs sm:text-sm font-semibold text-white transition hover:opacity-90 active:scale-95"
           >
-            <MessageCircle className="h-4 w-4" /> Confirmar por WhatsApp
+            <MessageCircle className="h-3.5 w-3.5 sm:h-4 sm:w-4" /> Confirmar por WhatsApp
           </a>
           <a
             href="/paciente/mis-turnos"
-            className="flex items-center gap-2 rounded-full border border-border px-6 py-3 text-sm font-semibold text-foreground transition hover:border-primary hover:text-primary"
+            className="flex w-full items-center justify-center gap-2 rounded-full border border-border px-4 sm:px-6 py-2.5 sm:py-3 text-xs sm:text-sm font-semibold text-foreground transition hover:border-primary hover:text-primary active:bg-primary-light/30"
           >
             Ver mis turnos
           </a>
         </div>
-        <p className="mt-4 flex items-center justify-center gap-1.5 text-xs text-muted">
-          <Mail className="h-3.5 w-3.5" /> También te enviamos un resumen a {result.patient.email}{" "}
+        <p className="mt-3 sm:mt-4 flex items-center justify-center gap-1.5 text-xs text-muted">
+          <Mail className="h-3 w-3 sm:h-3.5 sm:w-3.5" /> También te enviamos un resumen a {result.patient.email}{" "}
           si el hospital tiene el email configurado.
         </p>
       </div>
@@ -164,15 +164,15 @@ export default function BookingWizard({
 
   return (
     <div>
-      <ol className="flex items-center gap-2 text-xs font-semibold text-muted sm:text-sm">
+      <ol className="flex items-center gap-1.5 sm:gap-2 text-xs font-semibold text-muted sm:text-sm">
         {STEPS.map((label, i) => {
           const n = i + 1;
           const active = n === step;
           const done = n < step;
           return (
-            <li key={label} className="flex flex-1 items-center gap-2">
+            <li key={label} className="flex flex-1 items-center gap-1.5 sm:gap-2">
               <span
-                className={`flex h-7 w-7 shrink-0 items-center justify-center rounded-full ${
+                className={`flex h-6 w-6 sm:h-7 sm:w-7 shrink-0 items-center justify-center rounded-full text-xs sm:text-sm ${
                   done
                     ? "bg-primary text-white"
                     : active
@@ -180,7 +180,7 @@ export default function BookingWizard({
                       : "bg-primary-light/60 text-muted"
                 }`}
               >
-                {done ? <Check className="h-3.5 w-3.5" /> : n}
+                {done ? <Check className="h-3 w-3 sm:h-3.5 sm:w-3.5" /> : n}
               </span>
               <span className={`hidden sm:inline ${active ? "text-foreground" : ""}`}>{label}</span>
               {n < STEPS.length && <span className="h-px flex-1 bg-border" />}
@@ -189,9 +189,9 @@ export default function BookingWizard({
         })}
       </ol>
 
-      <div className="mt-8">
+      <div className="mt-4 sm:mt-8">
         {step === 1 && (
-          <div className="grid gap-3 sm:grid-cols-2">
+          <div className="grid gap-2 sm:gap-3 grid-cols-1 sm:grid-cols-2">
             {specialties.map((s) => {
               return (
                 <button
@@ -203,14 +203,14 @@ export default function BookingWizard({
                     setTime(null);
                     setStep(2);
                   }}
-                  className="flex items-center gap-3 rounded-2xl border border-border bg-surface p-4 text-left transition hover:border-primary hover:shadow-sm"
+                  className="flex items-center gap-2 sm:gap-3 rounded-xl sm:rounded-2xl border border-border bg-surface p-3 sm:p-4 text-left transition hover:border-primary hover:shadow-sm active:bg-primary-light/30"
                 >
-                  <span className="flex h-10 w-10 shrink-0 items-center justify-center rounded-xl bg-primary-light text-primary">
-                    <SpecialtyIcon name={s.icon} className="h-5 w-5" />
+                  <span className="flex h-9 w-9 sm:h-10 sm:w-10 shrink-0 items-center justify-center rounded-lg sm:rounded-xl bg-primary-light text-primary">
+                    <SpecialtyIcon name={s.icon} className="h-4 w-4 sm:h-5 sm:w-5" />
                   </span>
-                  <div>
-                    <p className="font-semibold text-foreground">{s.name}</p>
-                    <p className="text-xs text-muted">{s.doctors.length} profesional(es)</p>
+                  <div className="min-w-0">
+                    <p className="font-semibold text-foreground text-sm sm:text-base truncate">{s.name}</p>
+                    <p className="text-xs text-muted">{s.doctors.length} prof.</p>
                   </div>
                 </button>
               );
@@ -221,7 +221,7 @@ export default function BookingWizard({
         {step === 2 && specialty && (
           <div>
             <BackButton onClick={() => setStep(1)} label="Cambiar especialidad" />
-            <div className="mt-4 grid gap-3 sm:grid-cols-2">
+            <div className="mt-4 grid gap-2 sm:gap-3 grid-cols-1 sm:grid-cols-2">
               {specialty.doctors.map((d) => (
                 <button
                   key={d.id}
@@ -231,14 +231,14 @@ export default function BookingWizard({
                     setTime(null);
                     setStep(3);
                   }}
-                  className="flex items-start gap-3 rounded-2xl border border-border bg-surface p-4 text-left transition hover:border-primary hover:shadow-sm"
+                  className="flex items-start gap-2 sm:gap-3 rounded-xl sm:rounded-2xl border border-border bg-surface p-3 sm:p-4 text-left transition hover:border-primary hover:shadow-sm active:bg-primary-light/30"
                 >
-                  <span className="flex h-10 w-10 shrink-0 items-center justify-center rounded-xl bg-primary-light text-primary">
-                    <User className="h-5 w-5" />
+                  <span className="flex h-9 w-9 sm:h-10 sm:w-10 shrink-0 items-center justify-center rounded-lg sm:rounded-xl bg-primary-light text-primary">
+                    <User className="h-4 w-4 sm:h-5 sm:w-5" />
                   </span>
-                  <div>
-                    <p className="font-semibold text-foreground">{d.name}</p>
-                    {d.bio && <p className="mt-0.5 text-xs text-muted">{d.bio}</p>}
+                  <div className="min-w-0">
+                    <p className="font-semibold text-foreground text-sm sm:text-base truncate">{d.name}</p>
+                    {d.bio && <p className="mt-0.5 text-xs text-muted line-clamp-2">{d.bio}</p>}
                   </div>
                 </button>
               ))}
@@ -250,10 +250,10 @@ export default function BookingWizard({
           <div>
             <BackButton onClick={() => setStep(2)} label="Cambiar profesional" />
 
-            <p className="mt-4 flex items-center gap-2 text-sm font-semibold text-foreground">
-              <Calendar className="h-4 w-4 text-primary" /> Elegí un día
+            <p className="mt-4 flex items-center gap-2 text-xs sm:text-sm font-semibold text-foreground">
+              <Calendar className="h-3.5 w-3.5 sm:h-4 sm:w-4 text-primary" /> Elegí un día
             </p>
-            <div className="mt-3 flex gap-2 overflow-x-auto pb-2">
+            <div className="mt-2 flex gap-1.5 sm:gap-2 overflow-x-auto pb-2">
               {days.map((d) => (
                 <button
                   key={d.dateStr}
@@ -261,31 +261,31 @@ export default function BookingWizard({
                     setDate(d.dateStr);
                     if (doctorId) loadSlots(doctorId, d.dateStr);
                   }}
-                  className={`flex shrink-0 flex-col items-center rounded-xl border px-3.5 py-2.5 text-sm transition ${
+                  className={`flex shrink-0 flex-col items-center rounded-lg sm:rounded-xl border px-2.5 sm:px-3.5 py-2 sm:py-2.5 text-xs sm:text-sm transition active:scale-95 ${
                     date === d.dateStr
                       ? "border-primary bg-primary text-white"
                       : "border-border bg-surface text-foreground hover:border-primary"
                   }`}
                 >
-                  <span className="text-[11px] uppercase opacity-80">{d.label}</span>
-                  <span className="font-semibold">{d.dayNumber}</span>
+                  <span className="text-[10px] sm:text-[11px] uppercase opacity-80">{d.label}</span>
+                  <span className="font-semibold text-sm sm:text-base">{d.dayNumber}</span>
                 </button>
               ))}
             </div>
 
             {date && (
-              <div className="mt-6">
-                <p className="text-sm font-semibold text-foreground">Horarios disponibles</p>
+              <div className="mt-4 sm:mt-6">
+                <p className="text-xs sm:text-sm font-semibold text-foreground">Horarios disponibles</p>
                 {slotsLoading ? (
-                  <div className="mt-3 flex items-center gap-2 text-sm text-muted">
-                    <Loader2 className="h-4 w-4 animate-spin" /> Buscando horarios…
+                  <div className="mt-2 sm:mt-3 flex items-center gap-2 text-xs sm:text-sm text-muted">
+                    <Loader2 className="h-3.5 w-3.5 sm:h-4 sm:w-4 animate-spin" /> Buscando horarios…
                   </div>
                 ) : slots.length === 0 ? (
-                  <p className="mt-3 text-sm text-muted">
+                  <p className="mt-2 sm:mt-3 text-xs sm:text-sm text-muted">
                     No hay horarios disponibles ese día. Probá con otra fecha.
                   </p>
                 ) : (
-                  <div className="mt-3 flex flex-wrap gap-2">
+                  <div className="mt-2 sm:mt-3 flex flex-wrap gap-1.5 sm:gap-2">
                     {slots.map((t) => (
                       <button
                         key={t}
@@ -293,7 +293,7 @@ export default function BookingWizard({
                           setTime(t);
                           setStep(4);
                         }}
-                        className={`rounded-full border px-4 py-2 text-sm font-semibold transition ${
+                        className={`rounded-full border px-3 sm:px-4 py-1.5 sm:py-2 text-xs sm:text-sm font-semibold transition active:scale-95 ${
                           time === t
                             ? "border-primary bg-primary text-white"
                             : "border-border text-foreground hover:border-primary"
@@ -313,18 +313,18 @@ export default function BookingWizard({
           <div>
             <BackButton onClick={() => setStep(3)} label="Cambiar día u horario" />
 
-            <div className="mt-4 rounded-2xl border border-border bg-surface p-5">
+            <div className="mt-4 rounded-xl sm:rounded-2xl border border-border bg-surface p-3 sm:p-5">
               <p className="text-xs font-semibold uppercase tracking-wide text-primary">
                 {specialty.name}
               </p>
-              <p className="mt-1 font-semibold text-foreground">{doctor.name}</p>
-              <p className="mt-2 text-lg font-bold text-foreground">
+              <p className="mt-1 font-semibold text-sm sm:text-base text-foreground truncate">{doctor.name}</p>
+              <p className="mt-2 text-base sm:text-lg font-bold text-foreground">
                 {formatAppointmentDate(new Date(`${date}T${time}:00`))} · {time} hs
               </p>
             </div>
 
             {confirmError && (
-              <p className="mt-4 rounded-xl bg-danger/10 px-3 py-2 text-sm text-danger">
+              <p className="mt-3 sm:mt-4 rounded-lg sm:rounded-xl bg-danger/10 px-3 py-2 text-xs sm:text-sm text-danger">
                 {confirmError}
               </p>
             )}
@@ -333,12 +333,12 @@ export default function BookingWizard({
               <button
                 onClick={confirmAppointment}
                 disabled={confirming}
-                className="mt-6 flex w-full items-center justify-center gap-2 rounded-full bg-accent px-6 py-3 text-sm font-semibold text-white transition hover:bg-accent-dark disabled:opacity-60 sm:w-auto"
+                className="mt-4 sm:mt-6 flex w-full items-center justify-center gap-2 rounded-full bg-accent px-4 sm:px-6 py-2.5 sm:py-3 text-sm font-semibold text-white transition hover:bg-accent-dark disabled:opacity-60 active:scale-95"
               >
-                {confirming && <Loader2 className="h-4 w-4 animate-spin" />} Confirmar turno
+                {confirming && <Loader2 className="h-3.5 w-3.5 sm:h-4 sm:w-4 animate-spin" />} Confirmar turno
               </button>
             ) : (
-              <div className="mt-6">
+              <div className="mt-4 sm:mt-6">
                 <InlineAuthPanel
                   onAuthenticated={(p) => {
                     setPatient(p);
@@ -358,9 +358,9 @@ function BackButton({ onClick, label }: { onClick: () => void; label: string }) 
   return (
     <button
       onClick={onClick}
-      className="flex items-center gap-1 text-sm font-semibold text-muted transition hover:text-primary"
+      className="flex items-center gap-1 text-xs sm:text-sm font-semibold text-muted transition hover:text-primary active:text-primary"
     >
-      <ChevronLeft className="h-4 w-4" /> {label}
+      <ChevronLeft className="h-3.5 w-3.5 sm:h-4 sm:w-4" /> {label}
     </button>
   );
 }
