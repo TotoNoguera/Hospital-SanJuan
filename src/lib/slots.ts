@@ -19,7 +19,12 @@ function localTime(date: Date) {
 }
 
 export function slotDateTime(dateStr: string, time: string) {
-  return new Date(`${dateStr}T${time}:00`);
+  // Parse as local time, then convert to UTC
+  const localDate = new Date(`${dateStr}T${time}:00`);
+  // Get timezone offset in milliseconds (positive for west of UTC)
+  const offset = localDate.getTimezoneOffset() * 60 * 1000;
+  // Subtract offset to get UTC (because getTimezoneOffset returns negative values for east)
+  return new Date(localDate.getTime() + offset);
 }
 
 /** dateStr en formato YYYY-MM-DD. Devuelve los horarios "HH:MM" libres para ese profesional. */

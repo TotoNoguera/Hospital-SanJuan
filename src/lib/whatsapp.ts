@@ -27,7 +27,8 @@ export function buildWhatsAppAppointmentLink(input: AppointmentSummaryInput) {
   const hospitalName = process.env.NEXT_PUBLIC_HOSPITAL_NAME || "Hospital San Juan";
 
   const lines = [
-    `¡Hola ${hospitalName}! 👋 Quiero confirmar mi turno #${input.appointmentId.slice(-6).toUpperCase()}`,
+    `¡Hola ${hospitalName}! 👋`,
+    `Quiero confirmar mi turno #${input.appointmentId.slice(-6).toUpperCase()}`,
     "",
     `Especialidad: ${input.specialtyName}`,
     `Profesional: ${input.doctorName}`,
